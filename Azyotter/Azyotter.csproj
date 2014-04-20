@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{991CCFCA-88FB-4EEE-8E06-DF19D95118A2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Azyotter</RootNamespace>
+    <AssemblyName>Azyotter</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET4</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NET4</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AsyncBridge.Net35">
+      <HintPath>..\packages\AsyncBridge.Net35.0.2.0\lib\net35-Client\AsyncBridge.Net35.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreTweet">
+      <HintPath>..\packages\CoreTweet.0.2.3\lib\net35\CoreTweet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Blend3SDK\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Threading">
+      <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Blend3SDK\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\AnonymousDisposable.cs">
+      <Link>Livet\AnonymousDisposable.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\DataContextDisposeAction.cs">
+      <Link>Livet\Behaviors\DataContextDisposeAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\LivetCallMethodAction.cs">
+      <Link>Livet\Behaviors\LivetCallMethodAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\ConfirmationDialogInteractionMessageAction.cs">
+      <Link>Livet\Behaviors\Messaging\ConfirmationDialogInteractionMessageAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\DirectInteractionMessage.cs">
+      <Link>Livet\Behaviors\Messaging\DirectInteractionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\InformationDialogInteractionMessageAction.cs">
+      <Link>Livet\Behaviors\Messaging\InformationDialogInteractionMessageAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\InteractionMessageAction.cs">
+      <Link>Livet\Behaviors\Messaging\InteractionMessageAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\InteractionMessageTrigger.cs">
+      <Link>Livet\Behaviors\Messaging\InteractionMessageTrigger.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\IO\OpenFileDialogInteractionMessageAction.cs">
+      <Link>Livet\Behaviors\Messaging\IO\OpenFileDialogInteractionMessageAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\IO\SaveFileDialogInteractionMessageAction.cs">
+      <Link>Livet\Behaviors\Messaging\IO\SaveFileDialogInteractionMessageAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\TransitionInteractionMessageAction.cs">
+      <Link>Livet\Behaviors\Messaging\TransitionInteractionMessageAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\Messaging\Windows\WindowInteractionMessageAction.cs">
+      <Link>Livet\Behaviors\Messaging\Windows\WindowInteractionMessageAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\MethodBinder.cs">
+      <Link>Livet\Behaviors\MethodBinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\MethodBinderWithArgument.cs">
+      <Link>Livet\Behaviors\MethodBinderWithArgument.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\RoutedEventTrigger.cs">
+      <Link>Livet\Behaviors\RoutedEventTrigger.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\SetFocusAction.cs">
+      <Link>Livet\Behaviors\SetFocusAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Behaviors\WindowCloseCancelBehavior.cs">
+      <Link>Livet\Behaviors\WindowCloseCancelBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Commands\Command.cs">
+      <Link>Livet\Commands\Command.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Commands\ListenerCommand.cs">
+      <Link>Livet\Commands\ListenerCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Commands\ViewModelCommand.cs">
+      <Link>Livet\Commands\ViewModelCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\DispatcherCollection.cs">
+      <Link>Livet\DispatcherCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\DispatcherHelper.cs">
+      <Link>Livet\DispatcherHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventArgsFactory.cs">
+      <Link>Livet\EventArgsFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\AnonymousCollectionChangedEventHandlerBag.cs">
+      <Link>Livet\EventListeners\AnonymousCollectionChangedEventHandlerBag.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\AnonymousPropertyChangedEventHandlerBag.cs">
+      <Link>Livet\EventListeners\AnonymousPropertyChangedEventHandlerBag.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\CollectionChangedEventListener.cs">
+      <Link>Livet\EventListeners\CollectionChangedEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\EventListener.cs">
+      <Link>Livet\EventListeners\EventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\PropertyChangedEventListener.cs">
+      <Link>Livet\EventListeners\PropertyChangedEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\WeakEvents\CollectionChangedWeakEventListener.cs">
+      <Link>Livet\EventListeners\WeakEvents\CollectionChangedWeakEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\WeakEvents\LivetWeakEventListener.cs">
+      <Link>Livet\EventListeners\WeakEvents\LivetWeakEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\EventListeners\WeakEvents\PropertyChangedWeakEventListener.cs">
+      <Link>Livet\EventListeners\WeakEvents\PropertyChangedWeakEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\LivetCompositeDisposable.cs">
+      <Link>Livet\LivetCompositeDisposable.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\ConfirmationMessage.cs">
+      <Link>Livet\Messaging\ConfirmationMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\GenericInteractionMessage.cs">
+      <Link>Livet\Messaging\GenericInteractionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\GenericResponsiveInteractionMessage.cs">
+      <Link>Livet\Messaging\GenericResponsiveInteractionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\InformationMessage.cs">
+      <Link>Livet\Messaging\InformationMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\InteractionMessage.cs">
+      <Link>Livet\Messaging\InteractionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\InteractionMessenger.cs">
+      <Link>Livet\Messaging\InteractionMessenger.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\IO\FileSelectionMessage.cs">
+      <Link>Livet\Messaging\IO\FileSelectionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\IO\OpeningFileSelectionMessage.cs">
+      <Link>Livet\Messaging\IO\OpeningFileSelectionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\IO\SavingFileSelectionMessage.cs">
+      <Link>Livet\Messaging\IO\SavingFileSelectionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\MessageListener.cs">
+      <Link>Livet\Messaging\MessageListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\ResponsiveInteractionMessage.cs">
+      <Link>Livet\Messaging\ResponsiveInteractionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\TransitionMessage.cs">
+      <Link>Livet\Messaging\TransitionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\TransitionMode.cs">
+      <Link>Livet\Messaging\TransitionMode.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\Windows\WindowAction.cs">
+      <Link>Livet\Messaging\Windows\WindowAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\Messaging\Windows\WindowActionMessage.cs">
+      <Link>Livet\Messaging\Windows\WindowActionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\NotificationObject.cs">
+      <Link>Livet\NotificationObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\ObservableSynchronizedCollection.cs">
+      <Link>Livet\ObservableSynchronizedCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\ReadOnlyDispatcherCollection.cs">
+      <Link>Livet\ReadOnlyDispatcherCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\ViewModel.cs">
+      <Link>Livet\ViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\ViewModelHelper.cs">
+      <Link>Livet\ViewModelHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Livet\.NET4.0\Livet%28.NET4.0%29\WeakReference.generic.cs">
+      <Link>Livet\WeakReference.generic.cs</Link>
+    </Compile>
+    <Compile Include="Extensions\EnumerableEx.cs" />
+    <Compile Include="Extensions\TaskExEx.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Authorization.cs" />
+    <Compile Include="Models\MainModel.cs" />
+    <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Models\StatusProcessor.cs" />
+    <Compile Include="Models\Tab.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="PropertyHelper.cs" />
+    <Compile Include="Extensions\Tuple.cs" />
+    <Compile Include="ViewModels\AuthorizationViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Page Include="Views\AuthorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\StatusViewModel.cs" />
+    <Compile Include="ViewModels\TabViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AuthorizationWindow.xaml.cs">
+      <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューターにはない NuGet パッケージを参照しています。これらをダウンロードするには、NuGet パッケージの復元を有効にしてください。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。不足しているファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

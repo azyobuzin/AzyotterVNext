@@ -1,0 +1,58 @@
+﻿<Window x:Class="Azyotter.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:lb="clr-namespace:Livet.Behaviors"
+        xmlns:lbm="clr-namespace:Livet.Behaviors.Messaging"
+        xmlns:vm="clr-namespace:Azyotter.ViewModels"
+        xmlns:v="clr-namespace:Azyotter.Views"
+        Title="Azyotter" Height="350" Width="525">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <lb:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize" />
+        </i:EventTrigger>
+        <lbm:InteractionMessageTrigger Messenger="{Binding Messenger}" MessageKey="StartAuthorization">
+            <lbm:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type v:AuthorizationWindow}" />
+        </lbm:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid>
+        <TabControl ItemsSource="{Binding Tabs}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ListBox ItemsSource="{Binding Statuses}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Image Grid.Column="0" Source="{Binding FromProfileImage}" />
+                                    
+                                    <StackPanel Grid.Column="1" Margin="6,0,0,0" Orientation="Vertical">
+                                        <TextBlock Text="{Binding FromName}" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding FromScreenName, StringFormat=@{0}}" />
+                                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Margin="0,3,0,3" />
+                                        <TextBlock Text="{Binding CreatedAt}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
+</Window>
