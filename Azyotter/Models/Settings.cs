@@ -82,7 +82,8 @@ namespace Azyotter.Models
 
         public Account GetActiveAccount()
         {
-            return this.Accounts.FirstOrDefault(a => a.UserId == this.ActiveAccountId);
+            return this.Accounts.FirstOrDefault(a => a.UserId == this.ActiveAccountId)
+                ?? this.Accounts.FirstOrDefault();
         }
     }
 }

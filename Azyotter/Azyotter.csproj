@@ -260,6 +260,7 @@
     </Compile>
     <Compile Include="ViewModels\StatusViewModel.cs" />
     <Compile Include="ViewModels\TabViewModel.cs" />
+    <Compile Include="ViewModels\TweetingViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>

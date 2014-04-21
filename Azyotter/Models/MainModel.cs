@@ -78,5 +78,20 @@ namespace Azyotter.Models
                 AddStatuses(this.GetTwitterClient(a).Statuses.HomeTimeline())
             ));
         }
+
+        public void Tweet(string text)
+        {
+            TaskExEx.RunLong(() =>{
+                try
+                {
+                    this.GetTwitterClient(this.Settings.GetActiveAccount())
+                        .Statuses.Update(status => text);
+                }
+                catch
+                {
+                    //TODO
+                }
+             });
+        }
     }
 }

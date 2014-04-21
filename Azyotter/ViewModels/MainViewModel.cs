@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Azyotter.Models;
 using Livet;
+using Livet.EventListeners;
 using Livet.Messaging;
 
 namespace Azyotter.ViewModels
@@ -17,6 +18,8 @@ namespace Azyotter.ViewModels
                 model => new TabViewModel(this, model),
                 DispatcherHelper.UIDispatcher
             );
+            this.Tweeting = new TweetingViewModel(this);
+            this.CompositeDisposable.Add(this.Tweeting);
         }
 
         public MainModel Model { get; private set; }
@@ -32,5 +35,7 @@ namespace Azyotter.ViewModels
         }
 
         public ReadOnlyDispatcherCollection<TabViewModel> Tabs { get; private set; }
+
+        public TweetingViewModel Tweeting { get; private set; }
     }
 }
