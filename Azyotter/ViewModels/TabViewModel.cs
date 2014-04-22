@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Azyotter.Models;
 using Livet;
+using Livet.Commands;
 using Livet.EventListeners;
 
 namespace Azyotter.ViewModels
@@ -44,6 +45,33 @@ namespace Azyotter.ViewModels
         }
 
         public ReadOnlyDispatcherCollection<StatusViewModel> Statuses { get; private set; }
+
+        private StatusViewModel selectedStatus = null;
+        public StatusViewModel SelectedStatus
+        {
+            get
+            {
+                return this.selectedStatus;
+            }
+            set
+            {
+                this.Set(value);
+            }
+        }
+
+        private ViewModelCommand favoriteCommand;
+        public ViewModelCommand FavoriteCommand
+        {
+            get
+            {
+                if (this.favoriteCommand == null)
+                    this.favoriteCommand = new ViewModelCommand(() =>
+                    {
+                        this.SelectedStatus.Model.ToggleFavorite();
+                    }, () => this.SelectedStatus != null /*TODO: DM チェック*/);
+                return this.favoriteCommand;
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {

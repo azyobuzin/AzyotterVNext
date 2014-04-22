@@ -240,8 +240,10 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\StatusModel.cs" />
     <Compile Include="Models\StatusProcessor.cs" />
+    <Compile Include="Models\StatusStorage.cs" />
     <Compile Include="Models\Tab.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserStorage.cs" />
     <Compile Include="PropertyHelper.cs" />
     <Compile Include="Extensions\Tuple.cs" />
     <Compile Include="ViewModels\AuthorizationViewModel.cs" />

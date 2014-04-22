@@ -37,6 +37,12 @@ namespace Azyotter.ViewModels
                         break;
                 }
             }));
+            this.CompositeDisposable.Add(new CollectionChangedEventListener(model.FavoritedUsers,
+                (sender, e) => this.RaisePropertyChanged(() => this.IsFavorited)));
+            this.CompositeDisposable.Add(new PropertyChangedEventListener(model.Parent.Settings)
+            {
+                { "ActiveAccountId", (sender, e) => this.RaisePropertyChanged(() => this.IsFavorited) }
+            });
         }
 
         public TabViewModel Parent { get; private set; }
@@ -79,6 +85,14 @@ namespace Azyotter.ViewModels
             get
             {
                 return this.Model.Text;
+            }
+        }
+
+        public bool IsFavorited
+        {
+            get
+            {
+                return this.Model.FavoritedUsers.Contains(this.Model.Parent.Settings.GetActiveAccount());
             }
         }
     }

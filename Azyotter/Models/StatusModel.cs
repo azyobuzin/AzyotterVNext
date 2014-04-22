@@ -1,15 +1,24 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CoreTweet;
+using Livet;
 
 namespace Azyotter.Models
 {
     public class StatusModel : ModelBase
     {
-        public StatusModel() { }
-        public StatusModel(MainModel mainModel, Status status)
+        public StatusModel(MainModel parent)
         {
-            this.Update(mainModel, status);
+            this.Parent = parent;
         }
+
+        public StatusModel(MainModel parent, Status status)
+            : this(parent)
+        {
+            this.Update(status);
+        }
+
+        public MainModel Parent { get; private set; }
 
         private bool isDM = false;
         public bool IsDM
@@ -76,12 +85,41 @@ namespace Azyotter.Models
             }
         }
 
-        public void Update(MainModel mainModel, Status status)
+        private ObservableSynchronizedCollection<Account> favoritedUsers = new ObservableSynchronizedCollection<Account>();
+        public ObservableSynchronizedCollection<Account> FavoritedUsers
+        {
+            get
+            {
+                return this.favoritedUsers;
+            }
+        }
+
+        public void Update(Status status)
         {
             this.Id = status.ID;
             this.CreatedAt = status.CreatedAt;
             this.Text = status.Text;
-            this.From = mainModel.GetOrUpdateUser(status.User);
+            this.From = this.Parent.Users.GetOrUpdate(status.User);
+        }
+
+        public Task ToggleFavorite()
+        {
+            return TaskExEx.RunLong(() =>
+            {
+                //TODO: RT の処理
+                var a = this.Parent.Settings.GetActiveAccount();
+                if (this.FavoritedUsers.Contains(a))
+                {
+                    this.Parent.GetTwitterClient().Favorites.Destroy(id => this.Id);
+                    this.FavoritedUsers.Remove(a);
+                }
+                else
+                {
+                    this.Parent.GetTwitterClient().Favorites.Create(id => this.Id);
+                    if (!this.FavoritedUsers.Contains(a))
+                        this.favoritedUsers.Add(a);
+                }
+            });
         }
     }
 }

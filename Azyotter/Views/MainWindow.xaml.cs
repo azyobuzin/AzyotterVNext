@@ -27,5 +27,19 @@ namespace Azyotter.Views
         }
 
         private MainViewModel vm;
+
+        private void ListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            var tabVm = (TabViewModel)listBox.DataContext;
+            listBox.InputBindings.Add(new KeyBinding(tabVm.FavoriteCommand, Key.S, ModifierKeys.Control));
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.tweetText.InputBindings.Add(new KeyBinding(this.vm.Tweeting.TweetCommand, Key.Return, ModifierKeys.Control));
+
+            this.vm.Initialize();
+        }
     }
 }

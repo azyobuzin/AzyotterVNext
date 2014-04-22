@@ -15,15 +15,15 @@ namespace Azyotter.Models
     {
         public MainModel()
         {
-            this.Statuses = new ConcurrentDictionary<long, StatusModel>();
-            this.Users = new ConcurrentDictionary<long, UserModel>();
             this.Settings = Settings.Load();
+            this.Statuses = new StatusStorage(this);
+            this.Users = new UserStorage(this);
 
             this.CompositeDisposable.Add(new CollectionChangedEventListener(this.Settings.Accounts)
             {
                 {
                     NotifyCollectionChangedAction.Add,
-                    (sender, e) => TaskExEx.RunLong(() => AddStatuses(
+                    (sender, e) => TaskExEx.RunLong(() => this.Statuses.AddRange(
                         this.GetTwitterClient(e.NewItems[0] as Account).Statuses.HomeTimeline()
                     ))
                 }
@@ -32,8 +32,13 @@ namespace Azyotter.Models
 
         public Settings Settings { get; private set; }
 
-        public ConcurrentDictionary<long, StatusModel> Statuses { get; private set; }
-        public ConcurrentDictionary<long, UserModel> Users { get; private set; }
+        public StatusStorage Statuses { get; private set; }
+        public UserStorage Users { get; private set; }
+
+        public Tokens GetTwitterClient()
+        {
+            return this.GetTwitterClient(this.Settings.GetActiveAccount());
+        }
 
         public Tokens GetTwitterClient(Account account)
         {
@@ -45,47 +50,27 @@ namespace Azyotter.Models
             );
         }
 
-        public void AddStatus(Status s)
+        public void PassNewStatus(StatusModel status)
         {
-            var isNewItem = true;
-            var model = this.Statuses.AddOrUpdate(s.ID, _ => new StatusModel(this, s), (_, current) =>
-            {
-                current.Update(this, s);
-                isNewItem = false;
-                return current;
-            });
-            if (isNewItem)
-                this.Settings.Tabs.ForEach(tab => tab.AddStatus(model));
-        }
-
-        public void AddStatuses(IEnumerable<Status> statuses)
-        {
-            statuses.ForEach(this.AddStatus);
-        }
-
-        public UserModel GetOrUpdateUser(User user)
-        {
-            return this.Users.AddOrUpdate(user.ID.Value, _ => new UserModel(user), (id, current) =>
-            {
-                current.Update(user);
-                return current;
-            });
+            this.Settings.Tabs.ForEach(tab => tab.AddStatus(status));
         }
 
         public void FirstReceive()
         {
             this.Settings.Accounts.ForEach(a => TaskExEx.RunLong(() =>
-                AddStatuses(this.GetTwitterClient(a).Statuses.HomeTimeline())
+                this.Statuses.AddRange(this.GetTwitterClient(a).Statuses.HomeTimeline())
             ));
         }
 
         public void Tweet(string text)
         {
-            TaskExEx.RunLong(() =>{
+            TaskExEx.RunLong(() =>
+            {
                 try
                 {
-                    this.GetTwitterClient(this.Settings.GetActiveAccount())
-                        .Statuses.Update(status => text);
+                    this.Statuses.Add(
+                        this.GetTwitterClient().Statuses.Update(status => text)
+                    );
                 }
                 catch
                 {
