@@ -242,6 +242,9 @@
     <Compile Include="Models\StatusProcessor.cs" />
     <Compile Include="Models\StatusStorage.cs" />
     <Compile Include="Models\Tab.cs" />
+    <Compile Include="Models\TwitterText\Extractor.cs" />
+    <Compile Include="Models\TwitterText\TwitterRegex.cs" />
+    <Compile Include="Models\TwitterText\Validator.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserStorage.cs" />
     <Compile Include="PropertyHelper.cs" />
@@ -297,6 +300,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Models\TwitterText\twitter-text-java.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
