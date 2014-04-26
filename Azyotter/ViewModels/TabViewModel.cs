@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Data;
 using Azyotter.Models;
 using Livet;
 using Livet.Commands;
@@ -21,6 +23,8 @@ namespace Azyotter.ViewModels
                 s => new StatusViewModel(this, s),
                 DispatcherHelper.UIDispatcher
             );
+            this.StatusesView = new ListCollectionView(this.Statuses);
+            this.StatusesView.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Descending));
 
             this.CompositeDisposable.Add(new PropertyChangedEventListener(model, (sender, e) =>
             {
@@ -45,6 +49,7 @@ namespace Azyotter.ViewModels
         }
 
         public ReadOnlyDispatcherCollection<StatusViewModel> Statuses { get; private set; }
+        public ListCollectionView StatusesView { get; private set; }
 
         private StatusViewModel selectedStatus = null;
         public StatusViewModel SelectedStatus

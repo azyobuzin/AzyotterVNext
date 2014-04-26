@@ -16,6 +16,7 @@ namespace Azyotter.ViewModels
             {
                 switch (e.PropertyName)
                 {
+                    case "Id":
                     case "CreatedAt":
                     case "Text":
                         this.RaisePropertyChanged(e.PropertyName);
@@ -47,6 +48,14 @@ namespace Azyotter.ViewModels
 
         public TabViewModel Parent { get; private set; }
         public StatusModel Model { get; private set; }
+
+        public long Id
+        {
+            get
+            {
+                return this.Model.Id;
+            }
+        }
 
         public string FromScreenName
         {

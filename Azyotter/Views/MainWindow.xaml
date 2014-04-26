@@ -17,7 +17,7 @@
             <lbm:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type v:AuthorizationWindow}" />
         </lbm:InteractionMessageTrigger>
     </i:Interaction.Triggers>
-    
+
     <DockPanel>
         <Grid DockPanel.Dock="Top" DataContext="{Binding Tweeting}">
             <Grid.ColumnDefinitions>
@@ -28,32 +28,32 @@
                 <RowDefinition Height="48" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <Button Grid.Column="0" Grid.Row="0">
                 <Image Source="{Binding ActiveAccount.ProfileImage}" Width="48" Height="48" />
             </Button>
-            
-            <TextBox Name="tweetText" Grid.Column="1" Grid.Row="0" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
-                     AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
-            
+
+            <TextBox x:Name="tweetText" Grid.Column="1" Grid.Row="0" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
+                AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+
             <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock Text="{Binding RemainingCount}" VerticalAlignment="Center" Margin="0,0,6,0" />
                 <Button Content="ツイート" Width="80" Command="{Binding TweetCommand}" />
             </StackPanel>
         </Grid>
-        
+
         <TabControl ItemsSource="{Binding Tabs}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </TabControl.ItemTemplate>
-            
+
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <ListBox ItemsSource="{Binding Statuses}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                             HorizontalContentAlignment="Stretch" BorderThickness="0"
-                             SelectedItem="{Binding SelectedStatus}" Loaded="ListBox_Loaded">
+                    <ListBox ItemsSource="{Binding StatusesView}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        HorizontalContentAlignment="Stretch" BorderThickness="0"
+                        SelectedItem="{Binding SelectedStatus}" Loaded="ListBox_Loaded">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="6">
@@ -61,25 +61,25 @@
                                         <ColumnDefinition Width="48" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    
+
                                     <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center">
                                         <StackPanel.Resources>
                                             <SolidColorBrush x:Key="IndicatorForeground" Color="#FFE2E2E2" />
-                                            <Style TargetType="TextBlock">
+                                            <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="FontSize" Value="50" />
                                                 <Setter Property="Margin" Value="10,0" />
                                                 <Setter Property="Foreground" Value="{StaticResource IndicatorForeground}" />
                                             </Style>
                                         </StackPanel.Resources>
-                                        
+
                                         <TextBlock Text="★" Visibility="{Binding IsFavorited, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     </StackPanel>
-                                    
+
                                     <Image Grid.Column="0" Source="{Binding FromProfileImage}" />
-                                    
+
                                     <StackPanel Grid.Column="1" Margin="6,0,0,0" Orientation="Vertical">
                                         <TextBlock Text="{Binding FromName}" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding FromScreenName, StringFormat=@{0}}" />
+                                        <TextBlock Text="{Binding FromScreenName, StringFormat=@\{0\}}" />
                                         <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Margin="0,6,0,6" />
                                         <TextBlock Text="{Binding CreatedAt}" />
                                     </StackPanel>
