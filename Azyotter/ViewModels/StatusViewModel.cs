@@ -37,7 +37,7 @@ namespace Azyotter.ViewModels
                         break;
                 }
             }));
-            this.CompositeDisposable.Add(new CollectionChangedEventListener(model.FavoritedUsers,
+            this.CompositeDisposable.Add(new CollectionChangedEventListener(model.FavoritedAccounts,
                 (sender, e) => this.RaisePropertyChanged(() => this.IsFavorited)));
             this.CompositeDisposable.Add(new PropertyChangedEventListener(model.Parent.Settings)
             {
@@ -92,7 +92,7 @@ namespace Azyotter.ViewModels
         {
             get
             {
-                return this.Model.FavoritedUsers.Contains(this.Model.Parent.Settings.GetActiveAccount());
+                return this.Model.FavoritedAccounts.Contains(this.Model.Parent.Settings.GetActiveAccount());
             }
         }
     }

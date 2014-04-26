@@ -62,6 +62,19 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     
+                                    <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <StackPanel.Resources>
+                                            <SolidColorBrush x:Key="IndicatorForeground" Color="#FFE2E2E2" />
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="FontSize" Value="50" />
+                                                <Setter Property="Margin" Value="10,0" />
+                                                <Setter Property="Foreground" Value="{StaticResource IndicatorForeground}" />
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        
+                                        <TextBlock Text="★" Visibility="{Binding IsFavorited, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    </StackPanel>
+                                    
                                     <Image Grid.Column="0" Source="{Binding FromProfileImage}" />
                                     
                                     <StackPanel Grid.Column="1" Margin="6,0,0,0" Orientation="Vertical">

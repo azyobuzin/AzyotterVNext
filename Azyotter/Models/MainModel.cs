@@ -24,7 +24,8 @@ namespace Azyotter.Models
                 {
                     NotifyCollectionChangedAction.Add,
                     (sender, e) => TaskExEx.RunLong(() => this.Statuses.AddRange(
-                        this.GetTwitterClient(e.NewItems[0] as Account).Statuses.HomeTimeline()
+                        this.GetTwitterClient((Account)e.NewItems[0]).Statuses.HomeTimeline(),
+                        (Account)e.NewItems[0]
                     ))
                 }
             });
@@ -58,18 +59,19 @@ namespace Azyotter.Models
         public void FirstReceive()
         {
             this.Settings.Accounts.ForEach(a => TaskExEx.RunLong(() =>
-                this.Statuses.AddRange(this.GetTwitterClient(a).Statuses.HomeTimeline())
+                this.Statuses.AddRange(this.GetTwitterClient(a).Statuses.HomeTimeline(), a)
             ));
         }
 
-        public void Tweet(string text)
+        public Task Tweet(string text)
         {
-            TaskExEx.RunLong(() =>
+            return TaskEx.Run(() =>
             {
                 try
                 {
                     this.Statuses.Add(
-                        this.GetTwitterClient().Statuses.Update(status => text)
+                        this.GetTwitterClient().Statuses.Update(status => text),
+                        null
                     );
                 }
                 catch

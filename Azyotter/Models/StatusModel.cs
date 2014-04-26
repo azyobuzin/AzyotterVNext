@@ -12,10 +12,10 @@ namespace Azyotter.Models
             this.Parent = parent;
         }
 
-        public StatusModel(MainModel parent, Status status)
+        public StatusModel(MainModel parent, Status status, Account account)
             : this(parent)
         {
-            this.Update(status);
+            this.Update(status, account);
         }
 
         public MainModel Parent { get; private set; }
@@ -85,21 +85,31 @@ namespace Azyotter.Models
             }
         }
 
-        private ObservableSynchronizedCollection<Account> favoritedUsers = new ObservableSynchronizedCollection<Account>();
-        public ObservableSynchronizedCollection<Account> FavoritedUsers
+        private ObservableSynchronizedCollection<Account> favoritedAccounts = new ObservableSynchronizedCollection<Account>();
+        public ObservableSynchronizedCollection<Account> FavoritedAccounts
         {
             get
             {
-                return this.favoritedUsers;
+                return this.favoritedAccounts;
             }
         }
 
-        public void Update(Status status)
+        public void Update(Status status, Account account)
         {
             this.Id = status.ID;
             this.CreatedAt = status.CreatedAt;
             this.Text = status.Text;
             this.From = this.Parent.Users.GetOrUpdate(status.User);
+            if (this.FavoritedAccounts.Contains(account))
+            {
+                if (status.IsFavorited.HasValue && !status.IsFavorited.Value)
+                    this.FavoritedAccounts.Remove(account);
+            }
+            else
+            {
+                if (status.IsFavorited.HasValue && status.IsFavorited.Value)
+                    this.FavoritedAccounts.Add(account);
+            }
         }
 
         public Task ToggleFavorite()
@@ -108,16 +118,18 @@ namespace Azyotter.Models
             {
                 //TODO: RT の処理
                 var a = this.Parent.Settings.GetActiveAccount();
-                if (this.FavoritedUsers.Contains(a))
+                if (this.FavoritedAccounts.Contains(a))
                 {
                     this.Parent.GetTwitterClient().Favorites.Destroy(id => this.Id);
-                    this.FavoritedUsers.Remove(a);
+                    this.FavoritedAccounts.Remove(a);
+                    //TODO: あんふぁぼ済みエラーの処理
                 }
                 else
                 {
                     this.Parent.GetTwitterClient().Favorites.Create(id => this.Id);
-                    if (!this.FavoritedUsers.Contains(a))
-                        this.favoritedUsers.Add(a);
+                    if (!this.FavoritedAccounts.Contains(a))
+                        this.favoritedAccounts.Add(a);
+                    //TODO: ふぁぼ済みエラーの処理
                 }
             });
         }

@@ -27,12 +27,12 @@ namespace Azyotter.Models
             return this.GetEnumerator();
         }
 
-        public void Add(Status s)
+        public void Add(Status status, Account account)
         {
             var isNewItem = true;
-            var model = this.dic.AddOrUpdate(s.ID, _ => new StatusModel(this.Parent, s), (_, current) =>
+            var model = this.dic.AddOrUpdate(status.ID, _ => new StatusModel(this.Parent, status, account), (_, current) =>
             {
-                current.Update(s);
+                current.Update(status, account);
                 isNewItem = false;
                 return current;
             });
@@ -40,9 +40,9 @@ namespace Azyotter.Models
                 this.Parent.PassNewStatus(model);
         }
 
-        public void AddRange(IEnumerable<Status> statuses)
+        public void AddRange(IEnumerable<Status> statuses, Account account)
         {
-            statuses.ForEach(this.Add);
+            statuses.ForEach(s => this.Add(s, account));
         }
     }
 }

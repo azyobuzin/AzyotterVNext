@@ -6,7 +6,7 @@
              d1p1:Ignorable="d"
              xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Startup="Application_Startup">
-  <Application.Resources>
-    
-  </Application.Resources>
+    <Application.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Application.Resources>
 </Application>
