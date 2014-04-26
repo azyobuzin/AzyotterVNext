@@ -469,13 +469,13 @@ namespace Azyotter.Models.TwitterText
         /// </summary>
         private sealed class IndexConverter
         {
-            protected readonly string text;
+            private readonly string text;
 
             // Keep track of a single corresponding pair of code unit and code point
             // offsets so that we can re-use counting work if the next requested
             // entity is near the most recent entity.
-            protected int codePointIndex = 0;
-            protected int charIndex = 0;
+            private int codePointIndex = 0;
+            private int charIndex = 0;
 
             IndexConverter(string text)
             {

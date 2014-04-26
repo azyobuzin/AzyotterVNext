@@ -40,8 +40,8 @@ namespace Azyotter.Models.TwitterText
                                                    "\\u200c" +                        // Zero-Width Non-Joiner
                                                    "\\u0e01-\\u0e3a\\u0e40-\\u0e4e" + // Thai
                                                    "\\u1100-\\u11ff\\u3130-\\u3185\\uA960-\\uA97F\\uAC00-\\uD7AF\\uD7B0-\\uD7FF" + // Hangul (Korean)
-                                                   "\\p{InHiragana}\\p{InKatakana}" +  // Japanese Hiragana and Katakana
-                                                   "\\p{InCJKUnifiedIdeographs}" +     // Japanese Kanji / Chinese Han
+                                                   "\\p{IsHiragana}\\p{IsKatakana}" +  // Japanese Hiragana and Katakana
+                                                   "\\p{IsCJKUnifiedIdeographs}" +     // Japanese Kanji / Chinese Han
                                                    "\\u3003\\u3005\\u303b" +           // Kanji/Han iteration marks
                                                    "\\uff21-\\uff3a\\uff41-\\uff5a" +  // full width Alphabet
                                                    "\\uff66-\\uff9f" +                 // half width Katakana
@@ -53,11 +53,11 @@ namespace Azyotter.Models.TwitterText
         /* URL related hash regex collection */
         private const string URL_VALID_PRECEEDING_CHARS = "(?:[^A-Z0-9@＠$#＃\u202A-\u202E]|^)";
 
-        private const string URL_VALID_CHARS = "[\\p{Alnum}" + LATIN_ACCENTS_CHARS + "]";
-        private const string URL_VALID_SUBDOMAIN = "(?:(?:" + URL_VALID_CHARS + "[" + URL_VALID_CHARS + "\\-_]*)?" + URL_VALID_CHARS + "\\.)";
-        private const string URL_VALID_DOMAIN_NAME = "(?:(?:" + URL_VALID_CHARS + "[" + URL_VALID_CHARS + "\\-]*)?" + URL_VALID_CHARS + "\\.)";
+        private const string URL_VALID_CHARS = "\\p{L}\\p{N}" + LATIN_ACCENTS_CHARS;
+        private const string URL_VALID_SUBDOMAIN = "(?:(?:[" + URL_VALID_CHARS + "][" + URL_VALID_CHARS + "\\-_]*)?[" + URL_VALID_CHARS + "]\\.)";
+        private const string URL_VALID_DOMAIN_NAME = "(?:(?:[" + URL_VALID_CHARS + "][" + URL_VALID_CHARS + "\\-]*)?[" + URL_VALID_CHARS + "]\\.)";
         /* Any non-space, non-punctuation characters. \p{Z} = any kind of whitespace or invisible separator. */
-        private const string URL_VALID_UNICODE_CHARS = "[.[^\\p{Punct}\\s\\p{Z}\\p{InGeneralPunctuation}]]";
+        private const string URL_VALID_UNICODE_CHARS = "[^\\p{P}\\p{S}\\s\\p{Z}\\p{IsGeneralPunctuation}]";
 
         private const string URL_VALID_GTLD =
             "(?:(?:academy|actor|aero|agency|arpa|asia|bar|bargains|berlin|best|bid|bike|biz|blue|boutique|build|builders|" +
@@ -72,7 +72,7 @@ namespace Azyotter.Models.TwitterText
             "solutions|supplies|supply|support|systems|tattoo|technology|tel|tienda|tips|today|tokyo|tools|training|" +
             "travel|uno|vacations|ventures|viajes|villas|vision|vote|voting|voto|voyage|wang|watch|wed|wien|wiki|works|" +
             "xxx|xyz|zone|дети|онлайн|орг|сайт|بازار|شبكة|みんな|中信|中文网|公司|公益|在线|我爱你|政务|游戏|移动|网络|集团|삼성)" +
-            "(?=[^\\p{Alnum}@]|$))";
+            "(?=[^\\p{L}\\p{N}@]|$))";
         private const string URL_VALID_CCTLD =
             "(?:(?:ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bl|bm|bn|bo|bq|br|bs|" +
             "bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cw|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|" +
@@ -83,7 +83,7 @@ namespace Azyotter.Models.TwitterText
             "sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|" +
             "ye|yt|za|zm|zw|мон|рф|срб|укр|қаз|الاردن|الجزائر|السعودية|المغرب|امارات|ایران|بھارت|تونس|سودان|سورية|عمان|فلسطين|قطر|مصر|مليسيا|پاکستان|" +
             "भारत|বাংলা|ভারত|ਭਾਰਤ|ભારત|இந்தியா|இலங்கை|சிங்கப்பூர்|భారత్|ලංකා|ไทย|გე|中国|中國|台湾|台灣|新加坡|" +
-            "香港|한국)(?=[^\\p{Alnum}@]|$))";
+            "香港|한국)(?=[^\\p{L}\\p{N}@]|$))";
         private const string URL_PUNYCODE = "(?:xn--[0-9a-z]+)";
 
         private const string URL_VALID_DOMAIN =
@@ -108,7 +108,7 @@ namespace Azyotter.Models.TwitterText
                 URL_VALID_DOMAIN_NAME + URL_VALID_CCTLD + "(?=/)" +     // e.g. t.co/
             ")";
 
-        private const string URL_VALID_PORT_NUMBER = "[0-9]++";
+        private const string URL_VALID_PORT_NUMBER = "[0-9]+";
 
         private const string URL_VALID_GENERAL_PATH_CHARS = "[a-z0-9!\\*';:=\\+,.\\$/%#\\[\\]\\-_~\\|&@" + LATIN_ACCENTS_CHARS + "]";
         /** Allow URL paths to contain up to two nested levels of balanced parens
@@ -154,7 +154,7 @@ namespace Azyotter.Models.TwitterText
                 "(" + URL_VALID_DOMAIN + ")" +                               //  $5 Domain(s)
                 "(?::(" + URL_VALID_PORT_NUMBER + "))?" +                     //  $6 Port number (optional)
                 "(/" +
-                URL_VALID_PATH + "*+" +
+                URL_VALID_PATH + "*" +
                 ")?" +                                                       //  $7 URL Path and anchor
                 "(\\?" + URL_VALID_URL_QUERY_CHARS + "*" +                   //  $8 Query String
                         URL_VALID_URL_QUERY_ENDING_CHARS + ")?" +
@@ -200,7 +200,7 @@ namespace Azyotter.Models.TwitterText
         public static readonly Regex VALID_TCO_URL = new Regex("^https?:\\/\\/t\\.co\\/[a-z0-9]+", RegexOptions.IgnoreCase);
         public static readonly Regex INVALID_URL_WITHOUT_PROTOCOL_MATCH_BEGIN = new Regex("[-_./]$");
 
-        public static readonly Regex VALID_CASHTAG = new Regex("(^|" + UNICODE_SPACES + ")(" + DOLLAR_SIGN_CHAR + ")(" + CASHTAG + ")" + "(?=$|\\s|\\p{Punct})", RegexOptions.IgnoreCase);
+        public static readonly Regex VALID_CASHTAG = new Regex("(^|" + UNICODE_SPACES + ")(" + DOLLAR_SIGN_CHAR + ")(" + CASHTAG + ")" + "(?=$|\\s|[\\p{P}\\p{S}])", RegexOptions.IgnoreCase);
         public const int VALID_CASHTAG_GROUP_BEFORE = 1;
         public const int VALID_CASHTAG_GROUP_DOLLAR = 2;
         public const int VALID_CASHTAG_GROUP_CASHTAG = 3;
