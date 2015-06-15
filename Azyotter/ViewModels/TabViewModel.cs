@@ -61,6 +61,8 @@ namespace Azyotter.ViewModels
             set
             {
                 this.Set(value);
+                this.FavoriteCommand.RaiseCanExecuteChanged();
+                this.RetweetCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -70,11 +72,23 @@ namespace Azyotter.ViewModels
             get
             {
                 if (this.favoriteCommand == null)
-                    this.favoriteCommand = new ViewModelCommand(() =>
-                    {
-                        this.SelectedStatus.Model.ToggleFavorite();
-                    }, () => this.SelectedStatus != null /*TODO: DM チェック*/);
+                    this.favoriteCommand = new ViewModelCommand(
+                        () => this.SelectedStatus.FavoriteCommand.Execute(),
+                        () => this.SelectedStatus != null && this.SelectedStatus.FavoriteCommand.CanExecute);
                 return this.favoriteCommand;
+            }
+        }
+
+        private ViewModelCommand retweetCommand;
+        public ViewModelCommand RetweetCommand
+        {
+            get
+            {
+                if (this.retweetCommand == null)
+                    this.retweetCommand = new ViewModelCommand(
+                        () => this.SelectedStatus.RetweetCommand.Execute(),
+                        () => this.SelectedStatus != null && this.SelectedStatus.RetweetCommand.CanExecute);
+                return this.retweetCommand;
             }
         }
 

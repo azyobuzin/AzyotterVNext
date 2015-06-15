@@ -67,8 +67,8 @@ namespace Azyotter.Models
 
         public ObservableSynchronizedCollection<Tab> Tabs { get; private set; }
 
-        private long activeAccountId = 0;
-        public long ActiveAccountId
+        private long? activeAccountId = null;
+        public long? ActiveAccountId
         {
             get
             {

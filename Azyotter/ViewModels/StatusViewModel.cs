@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Azyotter.Models;
 using Livet;
+using Livet.Commands;
 using Livet.EventListeners;
 
 namespace Azyotter.ViewModels
@@ -40,6 +42,8 @@ namespace Azyotter.ViewModels
             }));
             this.CompositeDisposable.Add(new CollectionChangedEventListener(model.FavoritedAccounts,
                 (sender, e) => this.RaisePropertyChanged(() => this.IsFavorited)));
+            this.CompositeDisposable.Add(new CollectionChangedEventListener(model.RetweetedAccounts,
+                (sender, e) => this.RaisePropertyChanged(() => this.IsRetweeted)));
             this.CompositeDisposable.Add(new PropertyChangedEventListener(model.Parent.Settings)
             {
                 { "ActiveAccountId", (sender, e) => this.RaisePropertyChanged(() => this.IsFavorited) }
@@ -102,6 +106,42 @@ namespace Azyotter.ViewModels
             get
             {
                 return this.Model.FavoritedAccounts.Contains(this.Model.Parent.Settings.GetActiveAccount());
+            }
+        }
+
+        public bool IsRetweeted
+        {
+            get
+            {
+                return this.Model.RetweetedAccounts.Any(r => r.Account == this.Model.Parent.Settings.GetActiveAccount());
+            }
+        }
+        
+        private ViewModelCommand favoriteCommand;
+        public ViewModelCommand FavoriteCommand
+        {
+            get
+            {
+                if (this.favoriteCommand == null)
+                    this.favoriteCommand = new ViewModelCommand(() =>
+                    {
+                        this.Model.ToggleFavorite();
+                    }, () => this.Parent.Parent.Model.Settings.GetActiveAccount() != null /*TODO: DM チェック*/);
+                return this.favoriteCommand;
+            }
+        }
+
+        private ViewModelCommand retweetCommand;
+        public ViewModelCommand RetweetCommand
+        {
+            get
+            {
+                if (this.retweetCommand == null)
+                    this.retweetCommand = new ViewModelCommand(() =>
+                    {
+                        this.Model.ToggleRetweet();
+                    }, () => this.Parent.Parent.Model.Settings.GetActiveAccount() != null);
+                return this.retweetCommand;
             }
         }
     }

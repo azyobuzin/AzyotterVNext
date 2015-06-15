@@ -73,6 +73,7 @@
                                         </StackPanel.Resources>
 
                                         <TextBlock Text="★" Visibility="{Binding IsFavorited, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <TextBlock Text="🔃" Visibility="{Binding IsRetweeted, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     </StackPanel>
 
                                     <Image Grid.Column="0" Source="{Binding FromProfileImage}" />

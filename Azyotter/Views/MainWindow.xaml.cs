@@ -32,7 +32,11 @@ namespace Azyotter.Views
         {
             var listBox = (ListBox)sender;
             var tabVm = (TabViewModel)listBox.DataContext;
-            listBox.InputBindings.Add(new KeyBinding(tabVm.FavoriteCommand, Key.S, ModifierKeys.Control));
+            listBox.InputBindings.AddRange(new[]
+            {
+                new KeyBinding(tabVm.FavoriteCommand, Key.S, ModifierKeys.Control),
+                new KeyBinding(tabVm.RetweetCommand, Key.R, ModifierKeys.Alt)
+            });
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

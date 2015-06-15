@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CoreTweet;
 using Livet;
@@ -94,6 +95,15 @@ namespace Azyotter.Models
             }
         }
 
+        private ObservableSynchronizedCollection<RetweetInfo> retweetedAccounts = new ObservableSynchronizedCollection<RetweetInfo>();
+        public ObservableSynchronizedCollection<RetweetInfo> RetweetedAccounts
+        {
+            get
+            {
+                return this.retweetedAccounts;
+            }
+        }
+
         public void Update(Status status, Account account)
         {
             this.Id = status.ID;
@@ -109,6 +119,17 @@ namespace Azyotter.Models
             {
                 if (status.IsFavorited.HasValue && status.IsFavorited.Value)
                     this.FavoritedAccounts.Add(account);
+            }
+            var retweetInfo = this.RetweetedAccounts.FirstOrDefault(r => r.Account == account);
+            if (retweetInfo != null)
+            {
+                if (status.IsRetweeted.HasValue && !status.IsRetweeted.Value)
+                    this.RetweetedAccounts.Remove(retweetInfo);
+            }
+            else
+            {
+                if (status.IsRetweeted.HasValue && status.IsRetweeted.Value)
+                    this.RetweetedAccounts.Add(new RetweetInfo(account, status.CurrentUserRetweet));
             }
         }
 
@@ -130,6 +151,33 @@ namespace Azyotter.Models
                     if (!this.FavoritedAccounts.Contains(a))
                         this.favoritedAccounts.Add(a);
                     //TODO: ふぁぼ済みエラーの処理
+                }
+            });
+        }
+
+        public Task ToggleRetweet()
+        {
+            return TaskExEx.RunLong(() =>
+            {
+                //TODO: RT の処理
+                var a = this.Parent.Settings.GetActiveAccount();
+                var retweetInfo = this.RetweetedAccounts.FirstOrDefault(r => r.Account == a);
+                if (retweetInfo != null)
+                {
+                    var retweetId = retweetInfo.StatusId.HasValue
+                        ? retweetInfo.StatusId.Value
+                        : this.Parent.GetTwitterClient(a).Statuses
+                            .Show(id => this.Id, include_my_retweet => true)
+                            .CurrentUserRetweet;
+                    this.Parent.GetTwitterClient(a).Statuses.Destroy(id => retweetId);
+                    this.RetweetedAccounts.Remove(retweetInfo);
+                    //TODO: RT 削除済みエラーの処理
+                }
+                else
+                {
+                    var retweet = this.Parent.GetTwitterClient(a).Statuses.Retweet(id => this.Id);
+                    if (!this.RetweetedAccounts.Any(r => r.Account == a))
+                        this.RetweetedAccounts.Add(new RetweetInfo(a, retweet.ID));
                 }
             });
         }
